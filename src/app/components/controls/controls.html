@@ -1,0 +1,23 @@
+<div class="controls">
+  <button class="controls__item">
+    <span class="controls__icon">❤︎</span>
+  </button>
+
+  <button class="controls__item">
+    <span class="controls__icon">⏮</span>
+  </button>
+
+  <button class="controls__item" (click)="isPaused() ? onPlay() : onPause()">
+    <span class="controls__icon">
+      {{ isPaused() ? '▶' : '⏸' }}
+    </span>
+  </button>
+
+  <button class="controls__item">
+    <span class="controls__icon">⏭</span>
+  </button>
+
+  <button class="controls__item">
+    <span class="controls__icon">⟳</span>
+  </button>
+</div>

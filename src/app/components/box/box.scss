@@ -1,0 +1,33 @@
+.box {
+  max-width: 350px;
+  margin: 0 auto;
+  padding-top: 0;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  height: auto;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    height: 40px;
+    border-radius: 16px 16px 0 0;
+
+    h1 {
+      text-align: center;
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+
+  &__body {
+    padding: 1.5rem;
+    padding-top: 0;
+  }
+}
