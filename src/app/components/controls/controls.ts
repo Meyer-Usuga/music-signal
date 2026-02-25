@@ -1,19 +1,39 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Player } from '@services';
 
 @Component({
   selector: 'app-controls',
-  imports: [],
+  standalone: true,
   templateUrl: './controls.html',
   styleUrl: './controls.scss',
 })
 export class Controls {
-  readonly isPaused = signal(true);
+  readonly player = inject(Player);
 
-  onPause(): void {
-    this.isPaused.set(true);
+  onPlayPause(): void {
+    this.player.isPlaying() ? this.player.pause() : this.player.play();
   }
 
-  onPlay(): void {
-    this.isPaused.set(false);
+  onNext(): void {
+    this.player.next();
+  }
+
+  onPrev(): void {
+    this.player.prev();
+  }
+
+  onChanveVolume(){
+    //TODO: Falta implementar
+    //this.player.changeVolume();
+  }
+
+  onLoop(){
+    //TODO: Falta implementar
+    //this.player.loop();
+  }
+
+  onFavorite(){ 
+    //TODO: Falta implementar
+    //this.player.saveFavorite();
   }
 }

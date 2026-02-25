@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { Song } from '@interfaces';
+import { Player } from '@services';
 
 @Component({
   selector: 'app-preview',
@@ -7,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './preview.scss',
 })
 export class Preview {
-
+  readonly player = inject(Player);
 }

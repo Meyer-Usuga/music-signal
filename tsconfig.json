@@ -16,7 +16,9 @@
     "module": "preserve",
     "baseUrl": "src",
     "paths": {
-      "@components": ["app/components/index.ts"]
+      "@components": ["app/components/index.ts"],
+      "@services": ["app/services/index.ts"],
+      "@interfaces": ["app/interfaces/index.ts"],
     }
   },
   "angularCompilerOptions": {

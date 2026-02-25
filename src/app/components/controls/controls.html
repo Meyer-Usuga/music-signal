@@ -3,17 +3,17 @@
     <span class="controls__icon">❤︎</span>
   </button>
 
-  <button class="controls__item">
+  <button class="controls__item" (click)="onPrev()">
     <span class="controls__icon">⏮</span>
   </button>
 
-  <button class="controls__item" (click)="isPaused() ? onPlay() : onPause()">
+  <button class="controls__item" (click)="onPlayPause()">
     <span class="controls__icon">
-      {{ isPaused() ? '▶' : '⏸' }}
+      {{ player.isPlaying() ? '⏸' : '▶' }}
     </span>
   </button>
 
-  <button class="controls__item">
+  <button class="controls__item" (click)="onNext()">
     <span class="controls__icon">⏭</span>
   </button>
 
