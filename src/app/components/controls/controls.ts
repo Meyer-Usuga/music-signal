@@ -1,9 +1,11 @@
 import { Component, inject, signal, linkedSignal } from '@angular/core';
 import { Player } from '@services';
+import { Range } from '../range/range';
 
 @Component({
   selector: 'app-controls',
   standalone: true,
+  imports: [Range],
   templateUrl: './controls.html',
   styleUrl: './controls.scss',
 })
@@ -13,8 +15,8 @@ export class Controls {
   seekValue = signal<number>(0);
   volume = linkedSignal(() => this.player.volume());
 
-  onVolumeChange(value: number): void {
-    this.player.setVolume(value);
+  onVolumeChange(value: number | string): void {
+    this.player.setVolume(Number(value));
   }
 
   onPlayPause(): void {

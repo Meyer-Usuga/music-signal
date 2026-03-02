@@ -1,15 +1,11 @@
 <div class="controls">
   <div class="controls__seek">
-    <input
-      class="controls__range"
-      type="range"
-      min="0"
-      [max]="duration || 0"
-      [value]="currentTime || 0"
-      step="0.01"
-      (input)="onSeekPreview($event.target.value)"
-      (change)="onSeek($event.target.value)"
-    />
+    <app-range 
+      [max]="duration || 0" 
+      [value]="currentTime || 0" 
+      (onChange)="onSeek($event)" 
+      (onInput)="onSeekPreview($event)"/>
+  
     <div class="controls__times">
       <span>{{ formatTime(currentTime) }}</span>
       <span>{{ formatTime(duration) }}</span>
@@ -34,15 +30,10 @@
 
   <div class="controls__items--btn">
     <span class="controls__volume-label">🔊</span>
-    <input
-      class="controls__volume-range"
-      type="range"
-      min="0"
-      max="1"
-      step="0.01"
-      [value]="volume()"
-      (input)="onVolumeChange(Number($event.target.value))"
-    />
+    <app-range 
+      [max]="1" 
+      [value]="volume()" 
+      (onInput)="onVolumeChange($event)"/>
   </div>
   </div>
 </div>

@@ -1,0 +1,10 @@
+<input
+  class="range"
+  type="range"
+  min="0"
+  [max]="max()"
+  [value]="value()"
+  step="0.01"
+  (input)="onInputValue($event)"
+  (change)="onChangeValue($event)"
+/>
