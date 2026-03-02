@@ -12,10 +12,18 @@ import type { Song } from '@interfaces';
 export class Player {
   private audio?: HTMLAudioElement;
   private readonly isBrowser: boolean;
+  private currentLoadedIndex = -1;
 
   readonly playlist = signal<Song[]>([]);
-  readonly currentIndex = signal(0);
-  readonly isPlaying = signal(false);
+  readonly currentIndex = signal<number>(0);
+  readonly isPlaying = signal<boolean>(false);
+  readonly currentTime = signal<number>(0);
+  readonly duration = signal<number>(0);
+  readonly volume = signal<number>(0.7);
+  readonly progress = computed(() => {
+    const d = this.duration() || 1;
+    return (this.currentTime() / d) * 100;
+  });
 
   readonly currentSong = computed(
     () => this.playlist()[this.currentIndex()] ?? null
@@ -27,6 +35,15 @@ export class Player {
 
     if (this.isBrowser) {
       this.audio = new Audio();
+      this.audio.volume = this.volume();
+      this.audio.addEventListener('timeupdate', () => {
+        if (!this.audio) return;
+        this.currentTime.set(this.audio.currentTime || 0);
+      });
+      this.audio.addEventListener('loadedmetadata', () => {
+        if (!this.audio) return;
+        this.duration.set(this.audio.duration || 0);
+      });
       this.audio.addEventListener('ended', () => this.next());
     }
   }
@@ -34,6 +51,7 @@ export class Player {
   loadPlaylist(list: Song[]): void {
     this.playlist.set(list);
     this.currentIndex.set(0);
+    this.currentLoadedIndex = -1;
   }
 
   play(index?: number): void {
@@ -43,7 +61,12 @@ export class Player {
     const song = this.currentSong();
     if (!song) return;
 
-    this.audio.src = song.cover;
+    if (this.currentIndex() !== this.currentLoadedIndex) {
+      this.audio.src = song.cover;
+      this.audio.load();
+      this.currentLoadedIndex = this.currentIndex();
+    }
+
     this.audio.play();
     this.isPlaying.set(true);
   }
@@ -52,6 +75,20 @@ export class Player {
     if (!this.isBrowser || !this.audio) return;
     this.audio.pause();
     this.isPlaying.set(false);
+  }
+
+  seek(time: number): void {
+    if (!this.isBrowser || !this.audio) return;
+    this.audio.currentTime = Math.max(0, Math.min(time, this.duration() || 0));
+    this.currentTime.set(this.audio.currentTime || 0);
+  }
+
+  setVolume(vol: number): void {
+    const clamped = Math.max(0, Math.min(vol, 1));
+    this.volume.set(clamped);
+    if (this.isBrowser && this.audio) {
+      this.audio.volume = clamped;
+    }
   }
 
   next(): void {

@@ -1,23 +1,48 @@
 <div class="controls">
-  <button class="controls__item">
-    <span class="controls__icon">❤︎</span>
-  </button>
+  <div class="controls__seek">
+    <input
+      class="controls__range"
+      type="range"
+      min="0"
+      [max]="duration || 0"
+      [value]="currentTime || 0"
+      step="0.01"
+      (input)="onSeekPreview($event.target.value)"
+      (change)="onSeek($event.target.value)"
+    />
+    <div class="controls__times">
+      <span>{{ formatTime(currentTime) }}</span>
+      <span>{{ formatTime(duration) }}</span>
+    </div>
 
-  <button class="controls__item" (click)="onPrev()">
-    <span class="controls__icon">⏮</span>
-  </button>
+  </div>
 
-  <button class="controls__item" (click)="onPlayPause()">
-    <span class="controls__icon">
-      {{ player.isPlaying() ? '⏸' : '▶' }}
-    </span>
-  </button>
+  <div class="controls__items">
+    <button class="controls__items--btn" (click)="onPrev()">
+      <span class="controls__icon">⏮</span>
+    </button>
 
-  <button class="controls__item" (click)="onNext()">
-    <span class="controls__icon">⏭</span>
-  </button>
+    <button class="controls__items--btn" (click)="onPlayPause()">
+      <span class="controls__icon">
+        {{ player.isPlaying() ? '⏸' : '▶' }}
+      </span>
+    </button>
 
-  <button class="controls__item">
-    <span class="controls__icon">⟳</span>
-  </button>
+    <button class="controls__items--btn" (click)="onNext()">
+      <span class="controls__icon">⏭</span>
+    </button>
+
+  <div class="controls__items--btn">
+    <span class="controls__volume-label">🔊</span>
+    <input
+      class="controls__volume-range"
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      [value]="volume()"
+      (input)="onVolumeChange(Number($event.target.value))"
+    />
+  </div>
+  </div>
 </div>
